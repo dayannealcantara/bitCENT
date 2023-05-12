@@ -4,6 +4,7 @@ import { DatePickerInput } from "@mantine/dates";
 import { TipoTransacao } from "@/logic/core/financas/TipoTransacao";
 import Dinheiro from "@/logic/utils/Dinheiro";
 import "dayjs/locale/pt-br"
+import useFormulario from "@/data/hooks/useFormulario";
 
 interface FormularioProps {
     transacao: Transacao
@@ -13,6 +14,7 @@ interface FormularioProps {
 }
 
 export default function Formulario(props: FormularioProps) {
+  const { dados, alterarAtributo } = useFormulario<Transacao>(props.transacao)
   
   return (
     <div className={`
@@ -24,18 +26,24 @@ export default function Formulario(props: FormularioProps) {
         <TextInput
           label="Descrição"
           value={props.transacao.descricao}
+          onChange={alterarAtributo('descricao')}
         />
         <TextInput
           label="Valor"
           value={Dinheiro.formatar(props.transacao.valor)}
+          onChange={alterarAtributo('valor', Dinheiro.desformatar)}
         />
         <DatePickerInput
           label="Data"
           locale="pt-BR"
           value={props.transacao.data}
           valueFormat="DD/MM/YYYY"
+          onChange={alterarAtributo('data')}
         />
-        <Radio.Group>
+        <Radio.Group
+          value={dados.tipo}
+          onChange={alterarAtributo('tipo')}
+        >
           <Group>
             <Radio value={TipoTransacao.RECEITA} label="Receita" />
             <Radio value={TipoTransacao.DESPESA} label="Despesa" />
@@ -44,7 +52,9 @@ export default function Formulario(props: FormularioProps) {
       </div>
       <div className="flex px-4 sm:px-7 py-4 gap-3 bg-zinc-800">
         <Button
-          className="bg-green-500" color="green"  onClick={() => props.salvar?.(props.transacao)}>Salvar</Button>
+          className="bg-green-500" color="green" 
+          onClick={() => props.salvar?.(dados)}>
+        Salvar</Button>
         <Button
           className="bg-zinc-500" color="gray" onClick={props.cancelar}>Voltar</Button>
          <div className="flex-1"></div>
