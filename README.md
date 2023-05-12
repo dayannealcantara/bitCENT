@@ -1,38 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+<img src=".github/logo.png" alt="Logo" width="100" />
+</p>
 
-## Getting Started
+<p align="center">
+ Repositório Bitcent 
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/badge/TDEV-01-blue" alt="Semana Transformação.DEV #01" />
+  <img  src="https://img.shields.io/static/v1?label=license&message=MIT&color=blue" alt="License">   
+</p>
+
+<h2 align="center">
+    <img alt="Bitcent" src=".github/cover.svg" />
+</h2>
+
+<br>
+
+## Tecnologias
+
+Lista de tecnologias utilizadas no projeto:
+
+- [React](https://reactjs.org)
+- [Next.js](https://nextjs.org/)
+- [Firebase](https://firebase.google.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Mantine](https://mantine.dev/)
+
+## Executando o projeto
+
+1. Clone o repositório:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+$ git clone https://github.com/dayannealcantara/BitCENT
+$ cd bitcent
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Crie um projeto no Firebase e ative o Firestore e Autenticação com Google.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Permissões do Firestore:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+    	allow read, write: if false;
+    }
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    match /financas/{email}/transacoes/{id} {
+  		allow read: if (request.auth != null && request.auth.token.email == email);
+      allow write: if (request.auth != null && request.auth.token.email == email);
+    }
+    
+    match /usuarios/{email} {
+  		allow read: if (request.auth != null && request.auth.token.email == email);
+      allow write: if (request.auth != null && request.auth.token.email == email);
+    }
+  }
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. É preciso criar um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
 
-## Learn More
+```bash
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_API_KEY=
+```
+Usar as credenciais do seu projeto no Firebase.
 
-To learn more about Next.js, take a look at the following resources:
+4. Dentro da pasta do projeto, execute os comandos abaixo:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Instalar as dependências
+$ yarn
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Iniciar o projeto
+$ yarn dev
+```
+O app estará disponível no endereço http://localhost:3000.
 
-## Deploy on Vercel
+## Sobre o Projeto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Bitcent é uma aplicação web para controle de finanças pessoais com landing page e dashboard. O projeto utiliza o Firebase para autenticação e armazenamento de dados.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+Esse projeto está sob a [licença MIT](LICENSE.md).
+
+---
+
