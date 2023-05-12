@@ -1,16 +1,7 @@
-<p align="center">
-<img src=".github/logo.png" alt="Logo" width="100" />
-</p>
 
 <p align="center">
  Repositório Bitcent 
 </p>
-
-
-
-<h2 align="center">
-    <img alt="Bitcent" src=".github/cover.svg" />
-</h2>
 
 <br>
 
