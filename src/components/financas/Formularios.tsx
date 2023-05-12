@@ -1,16 +1,17 @@
+import "dayjs/locale/pt-br"
 import Transacao from "@/logic/core/financas/Transacao";
 import { Button, Group, Radio, TextInput } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { TipoTransacao } from "@/logic/core/financas/TipoTransacao";
 import Dinheiro from "@/logic/utils/Dinheiro";
-import "dayjs/locale/pt-br"
+
 import useFormulario from "@/data/hooks/useFormulario";
 
 interface FormularioProps {
-    transacao: Transacao
-    salvar?: (transacao: Transacao) => void
-    excluir?: (transacao: Transacao) => void
-    cancelar?: () => void
+  transacao: Transacao
+  salvar?: (transacao: Transacao) => void
+  excluir?: (transacao: Transacao) => void
+  cancelar?: () => void
 }
 
 export default function Formulario(props: FormularioProps) {
@@ -25,18 +26,18 @@ export default function Formulario(props: FormularioProps) {
       <div className="flex flex-col gap-4 p-4 sm:p-7">
         <TextInput
           label="Descrição"
-          value={props.transacao.descricao}
+          value={dados.descricao}
           onChange={alterarAtributo('descricao')}
         />
         <TextInput
           label="Valor"
-          value={Dinheiro.formatar(props.transacao.valor)}
+          value={Dinheiro.formatar(dados.valor)}
           onChange={alterarAtributo('valor', Dinheiro.desformatar)}
         />
         <DatePickerInput
           label="Data"
           locale="pt-BR"
-          value={props.transacao.data}
+          value={dados.data}
           valueFormat="DD/MM/YYYY"
           onChange={alterarAtributo('data')}
         />
