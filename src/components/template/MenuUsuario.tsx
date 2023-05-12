@@ -1,11 +1,14 @@
 
-import usuario from "@/data/constants/usuario";
+import AutenticacaoContext from "@/data/contexts/AutenticacaoContext";
 import { Avatar, Menu } from "@mantine/core";
 import { IconArrowsRightLeft, IconLogout, IconUser } from "@tabler/icons-react";
 import Link from "next/link";
+import { useContext } from "react";
 
 
 export default function MenuUsuario() {
+  const { usuario, logout} = useContext(AutenticacaoContext)
+
   return (
     <Menu>
       <Menu.Target>
@@ -40,7 +43,8 @@ export default function MenuUsuario() {
               <Menu.Divider />
                 <Menu.Item
                   color="red"
-                  icon={<IconLogout size={14} />}                  
+                  icon={<IconLogout size={14} />} 
+                  onClick={logout}                 
                 >Sair do Sistema</Menu.Item>
       </Menu.Dropdown>
     </Menu>
